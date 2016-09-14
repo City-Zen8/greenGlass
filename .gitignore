@@ -30,3 +30,5 @@ scripts/build/e2e-generated-tsconfig.json
 *.css.ts
 www/lib/
 platforms/
+out/
+plugins/
