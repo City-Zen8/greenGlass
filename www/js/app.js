@@ -48,13 +48,55 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    var latLng = new google.maps.LatLng({lat: 47.2300975, lng: -1.5466145});
-    var marker = new google.maps.Marker({
-      position: latLng,
-      map: $scope.map,
-      title: 'Recup verre',
-      icon: 'recup_verre.png'
-    });
+
+    function get(url) {
+      // Return a new promise.
+      return new Promise(function(resolve, reject) {
+          // Do the usual XHR stuff
+          var req = new XMLHttpRequest();
+          req.open('GET', url);
+
+          req.onload = function() {
+              // This is called even on 404 etc
+              // so check the status
+              if (req.status == 200) {
+                  // Resolve the promise with the response text
+                  resolve(req.response);
+              }
+              else {
+                  // Otherwise reject with the status text
+                  // which will hopefully be a meaningful error
+                  reject(Error(req.statusText));
+              }
+          };
+
+          // Handle network errors
+          req.onerror = function() {
+              reject(Error("Network Error"));
+          };
+
+          // Make the request
+          req.send();
+      });
+  }
+
+  function getJSON(url) {
+      return get(url).then(JSON.parse);
+  }
+
+  getJSON('data/markers.json')
+      .then(function(markers){
+          markers.forEach(function(marker){
+            new google.maps.Marker({
+              position: marker,
+              map: $scope.map,
+              title: 'Recup verre',
+              icon: 'recup_verre.png'
+            });
+          })
+      }, function(e){
+          console.log("Log story: " + e);
+      });
 
   }, function(error){
     console.log("Could not get location");
