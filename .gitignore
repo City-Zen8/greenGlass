@@ -29,3 +29,6 @@ scripts/e2e/webpackEntryPoints.json
 scripts/build/e2e-generated-tsconfig.json
 *.css.ts
 www/lib/
+platforms/
+out/
+plugins/
