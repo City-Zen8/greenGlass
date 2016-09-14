@@ -48,11 +48,12 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
 
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
+    var latLng = new google.maps.LatLng({lat: 47.2300975, lng: -1.5466145});
     var marker = new google.maps.Marker({
       position: latLng,
       map: $scope.map,
-      title: 'Recup verre'
+      title: 'Recup verre',
+      icon: 'recup_verre.png'
     });
 
   }, function(error){
