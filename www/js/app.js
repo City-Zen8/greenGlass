@@ -48,7 +48,12 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
  
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
- 
+
+    var marker = new google.maps.Marker({
+      position: latLng,
+      map: $scope.map,
+      title: 'Recup verre'
+    });
   }, function(error){
     console.log("Could not get location");
   });
