@@ -32,4 +32,4 @@ www/lib/
 platforms/
 out/
 plugins/
-!plugins/*.xml
+!platforms/android/AndroidManifest.xml
