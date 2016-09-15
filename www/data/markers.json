@@ -1,48 +1,46 @@
-{
-	"verre":{
+[	
+	{
+		"categorie":"verre",
 		"img":"img/recup_verre.png",
 		"location" : [
 			{
-				"latlng":{"lat":47.205679,"lng":-1.554390},
+				"latlng":{"lat":47.223012,"lng":-1.636836},
 				"indice":1
-			},
-			
+			},			
 			{
-				"latlng":{"lat":47.206320,"lng":-1.557147},
-				"indice":1
-			},
-			{
-				"latlng":{"lat":47.205496,"lng":-1.559239},
-				"indice":1
-			},
-			{
-				"latlng":{"lat":47.204599,"lng":-1.560859}
+				"latlng":{"lat":47.225526,"lng":-1.635344},
 				"indice":1
 			}
 		]
 	},
 
-	"BoiteLettre":{
-		"img":"img/plop.png",
+	{
+		"categorie":"BoiteLettre",
+		"img":"img/boite.png",
 		"location" : [
 			{
-				"latlng":{"lat":47.205679,"lng":-1.554390},
+				"latlng":{"lat":47.223735,"lng":-1.636272},
 				"indice":1
-			},
-			
+			},			
 			{
-				"latlng":{"lat":47.206320,"lng":-1.557147},
+				"latlng":{"lat":47.222630,"lng":-1.630221},
 				"indice":1
-			},
-			{
-				"latlng":{"lat":47.205496,"lng":-1.559239},
-				"indice":1
-			},
-			{
-				"latlng":{"lat":47.204599,"lng":-1.560859}
-				"indice":1
-			}
+			}			
 		]
 	},
 
-}
+	{
+		"categorie":"Cabine",
+		"img":"img/cabine.png",
+		"location" : [
+			{
+				"latlng":{"lat":47.223544,"lng":-1.636723},
+				"indice":1
+			},			
+			{
+				"latlng":{"lat":47.223128,"lng":-1.633850},
+				"indice":1
+			}
+		]
+	}
+]
