@@ -15,3 +15,20 @@
   display: block;
   z-index: 99999999999;
 }
+.bar.bar-header {
+  background: rgba(255,255,255,.10);
+  border-bottom-width: 0;
+}
+
+.bar.bar-header h1 {
+  color: black !important;
+}
+
+
+.scroll-content {
+  overflow: visible !important;
+}
+
+/*.platform-ios.platform-cordova:not(.fullscreen) .has-header {
+  top:0px;
+}*/

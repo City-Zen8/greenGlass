@@ -34,7 +34,23 @@ angular.module('starter', ['ionic', 'ngCordova'])
   $urlRouterProvider.otherwise("/");
 
 })
-.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation) {
+
+.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation, $ionicSideMenuDelegate) {
+   $scope.openMenu = function() {
+    console.log('ok');
+      $ionicSideMenuDelegate.toggleLeft();
+    };
+    $scope.filter = [];
+   $scope.toggleFilter = function(categ) {
+      if ($scope.filter.indexOf(categ) !== -1){
+        $scope.filter.splice($scope.filter.indexOf(categ),1);
+      }
+      else{
+        $scope.filter.push(categ);
+      }
+      console.log($scope.filter);
+    };
+ 
   var options = {timeout: 10000, enableHighAccuracy: true};
   // A confirm dialog
   $scope.showConfirm = function() {
@@ -103,9 +119,8 @@ function getJSON(url) {
 
 getJSON('data/markers.json')
     .then(function(markers){
-      var filtre = ['verre', 'boiteLettre', 'cabine'];
       markers.forEach(function(marker){
-        if (filtre.indexOf(marker.categorie)!== -1){
+        if ($scope.filter.indexOf(marker.categorie)!== -1){
           var img = marker.img;
           marker.locations.forEach(function(location){
             new google.maps.Marker({
