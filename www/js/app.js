@@ -42,14 +42,42 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
     $scope.filter = [];
    $scope.toggleFilter = function(categ) {
+
       if ($scope.filter.indexOf(categ) !== -1){
         $scope.filter.splice($scope.filter.indexOf(categ),1);
       }
       else{
         $scope.filter.push(categ);
       }
-      console.log($scope.filter);
+      $scope.placeMarkers();
     };
+
+    $scope.markersOnMap=[];
+
+    $scope.placeMarkers = function(){
+      $scope.markersOnMap.forEach(function(markerOnMap){
+        markerOnMap.setMap(null);
+      });
+      $scope.markers.forEach(function(marker){
+        if ($scope.filter.indexOf(marker.categorie)!== -1){
+          var img = marker.img;
+          marker.locations.forEach(function(location){
+            $scope.markersOnMap.push(
+              new google.maps.Marker({
+                position: location.latlng,
+                map: $scope.map,
+                title: location.legende,
+                icon: img
+              })
+            );
+          });
+        }
+        else{
+
+        }
+      });
+    };
+
  
   var options = {timeout: 10000, enableHighAccuracy: true};
   // A confirm dialog
@@ -84,8 +112,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
   }
 
-  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);7
-
+  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  var GeoMarker = new GeolocationMarker($scope.map);
 
   function get(url) {
     // Return a new promise.
@@ -124,19 +152,8 @@ function getJSON(url) {
 
 getJSON('data/markers.json')
     .then(function(markers){
-      markers.forEach(function(marker){
-        if ($scope.filter.indexOf(marker.categorie)!== -1){
-          var img = marker.img;
-          marker.locations.forEach(function(location){
-            new google.maps.Marker({
-              position: location.latlng,
-              map: $scope.map,
-              title: location.legende,
-              icon: img
-            });
-          });
-        }
-      });
+      $scope.markers = markers;      
+      $scope.placeMarkers();
 
      /*   markers.forEach(function(marker){
           new google.maps.Marker({
@@ -154,7 +171,10 @@ getJSON('data/markers.json')
     console.log("Could not get location");
     alert("Could not get location");
   });
+
 });
+
+
 /*
 .directive('ionSideMenus', ['$ionicBody', function($ionicBody) {
   return {

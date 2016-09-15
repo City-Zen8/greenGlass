@@ -33,6 +33,10 @@
 
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
 
+    <script src="lib/geolocation-marker/src/geolocation-marker.js"></script>
+
+    <script src="lib/geolocation-marker/src/geolocation-marker-exports.js"></script>
+
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbDaBafnU8TfP9upVzN7hMKHRNAZUklE0"></script>
   </head>
   <body ng-app="starter">
@@ -70,7 +74,7 @@
                      </label>
                   </li>
                   <li class="item item-toggle">
-                     Cabine assertive
+                     Cabine téléphonique
                      <label class="toggle toggle-assertive">
                        <input type="checkbox" ng-click="toggleFilter('cabine')">
                        <div class="track">
