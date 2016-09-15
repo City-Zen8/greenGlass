@@ -5,6 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
 
+.controller('myCtrl', function($scope, $state) {
+  $scope.yolo = "yolo";
+
+  $scope.clickme = function(){
+    alert('yolo');
+  }
+
+})
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -39,61 +48,62 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+  var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+  var mapOptions = {
+    center: latLng,
+    zoom: 15,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);7
 
-    function get(url) {
-      // Return a new promise.
-      return new Promise(function(resolve, reject) {
-          // Do the usual XHR stuff
-          var req = new XMLHttpRequest();
-          req.open('GET', url);
 
-          req.onload = function() {
-              // This is called even on 404 etc
-              // so check the status
-              if (req.status == 200) {
-                  // Resolve the promise with the response text
-                  resolve(req.response);
-              }
-              else {
-                  // Otherwise reject with the status text
-                  // which will hopefully be a meaningful error
-                  reject(Error(req.statusText));
-              }
-          };
+  function get(url) {
+    // Return a new promise.
+    return new Promise(function(resolve, reject) {
+        // Do the usual XHR stuff
+        var req = new XMLHttpRequest();
+        req.open('GET', url);
 
-          // Handle network errors
-          req.onerror = function() {
-              reject(Error("Network Error"));
-          };
+        req.onload = function() {
+            // This is called even on 404 etc
+            // so check the status
+            if (req.status == 200) {
+                // Resolve the promise with the response text
+                resolve(req.response);
+            }
+            else {
+                // Otherwise reject with the status text
+                // which will hopefully be a meaningful error
+                reject(Error(req.statusText));
+            }
+        };
 
-          // Make the request
-          req.send();
-      });
-  }
+        // Handle network errors
+        req.onerror = function() {
+            reject(Error("Network Error"));
+        };
 
-  function getJSON(url) {
-      return get(url).then(JSON.parse);
-  }
+        // Make the request
+        req.send();
+    });
+}
 
-  getJSON('data/markers.json')
-      .then(function(markers){
-          markers.forEach(function(marker){
-            new google.maps.Marker({
-              position: marker,
-              map: $scope.map,
-              title: 'Recup verre',
-              icon: 'recup_verre.png'
-            });
-          })
+function getJSON(url) {
+    return get(url).then(JSON.parse);
+}
+
+getJSON('data/markers.json')
+    .then(function(markers){
+        markers.forEach(function(marker){
+          new google.maps.Marker({
+            position: marker,
+            map: $scope.map,
+            title: 'Recup verre',
+            icon: 'recup_verre.png'
+          });
+        })
       }, function(e){
           console.log("Log story: " + e);
       });
