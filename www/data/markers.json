@@ -2,7 +2,7 @@
 	{
 		"categorie":"verre",
 		"img":"img/recup_verre.png",
-		"location" : [
+		"locations" : [
 			{
 				"latlng":{"lat":47.223012,"lng":-1.636836},
 				"indice":1
@@ -17,7 +17,7 @@
 	{
 		"categorie":"BoiteLettre",
 		"img":"img/boite.png",
-		"location" : [
+		"locations" : [
 			{
 				"latlng":{"lat":47.223735,"lng":-1.636272},
 				"indice":1
@@ -32,7 +32,7 @@
 	{
 		"categorie":"Cabine",
 		"img":"img/cabine.png",
-		"location" : [
+		"locations" : [
 			{
 				"latlng":{"lat":47.223544,"lng":-1.636723},
 				"indice":1
