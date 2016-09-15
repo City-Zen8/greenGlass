@@ -5,15 +5,6 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
 
-.controller('myCtrl', function($scope, $state) {
-  $scope.yolo = "yolo";
-
-  $scope.clickme = function(){
-    alert('yolo');
-  }
-
-})
-
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -37,14 +28,30 @@ angular.module('starter', ['ionic', 'ngCordova'])
   .state('map', {
     url: '/',
     templateUrl: 'templates/map.html',
-    controller: 'MapCtrl'
+    // controller: 'MapCtrl'
   });
 
   $urlRouterProvider.otherwise("/");
 
 })
-.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
+  // A confirm dialog
+  $scope.showConfirm = function() {
+   var confirmPopup = $ionicPopup.confirm({
+     title: 'Ajouter un point de récupération',
+     template: 'Si tu bullshit, je te casse les jambes'
+   });
+
+   confirmPopup.then(function(res) {
+     if(res) {
+       console.log('You are sure');
+     } else {
+       console.log('You are not sure');
+     }
+   });
+  };
+
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
