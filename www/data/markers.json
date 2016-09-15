@@ -1,6 +1,48 @@
-[
-	{"lat":47.205679,"lng":-1.554390},
-	{"lat":47.206320,"lng":-1.557147},
-	{"lat":47.205496,"lng":-1.559239},
-	{"lat":47.204599,"lng":-1.560859}
-]
+{
+	"verre":{
+		"img":"img/recup_verre.png",
+		"location" : [
+			{
+				"latlng":{"lat":47.205679,"lng":-1.554390},
+				"indice":1
+			},
+			
+			{
+				"latlng":{"lat":47.206320,"lng":-1.557147},
+				"indice":1
+			},
+			{
+				"latlng":{"lat":47.205496,"lng":-1.559239},
+				"indice":1
+			},
+			{
+				"latlng":{"lat":47.204599,"lng":-1.560859}
+				"indice":1
+			}
+		]
+	},
+
+	"BoiteLettre":{
+		"img":"img/plop.png",
+		"location" : [
+			{
+				"latlng":{"lat":47.205679,"lng":-1.554390},
+				"indice":1
+			},
+			
+			{
+				"latlng":{"lat":47.206320,"lng":-1.557147},
+				"indice":1
+			},
+			{
+				"latlng":{"lat":47.205496,"lng":-1.559239},
+				"indice":1
+			},
+			{
+				"latlng":{"lat":47.204599,"lng":-1.560859}
+				"indice":1
+			}
+		]
+	},
+
+}
