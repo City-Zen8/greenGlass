@@ -101,7 +101,7 @@ getJSON('data/markers.json')
             position: marker,
             map: $scope.map,
             title: 'Recup verre',
-            icon: 'recup_verre.png'
+            icon: 'img/recup_verre.png'
           });
         })
       }, function(e){
