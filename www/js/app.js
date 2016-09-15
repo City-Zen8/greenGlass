@@ -78,6 +78,11 @@ angular.module('starter', ['ionic', 'ngCordova'])
     zoom: 15,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
+  function ContentController($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeft = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
+  }
 
   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);7
 
@@ -150,3 +155,37 @@ getJSON('data/markers.json')
     alert("Could not get location");
   });
 });
+/*
+.directive('ionSideMenus', ['$ionicBody', function($ionicBody) {
+  return {
+    restrict: 'ECA',
+    controller: '$ionicSideMenus',
+    compile: function(element, attr) {
+      attr.$set('class', (attr['class'] || '') + ' view');
+
+      return { pre: prelink };
+      function prelink($scope, $element, $attrs, ctrl) {
+
+        ctrl.enableMenuWithBackViews($scope.$eval($attrs.enableMenuWithBackViews));
+
+        $scope.$on('$ionicExposeAside', function(evt, isAsideExposed) {
+          if (!$scope.$exposeAside) $scope.$exposeAside = {};
+          $scope.$exposeAside.active = isAsideExposed;
+          $ionicBody.enableClass(isAsideExposed, 'aside-open');
+        });
+
+        $scope.$on('$ionicView.beforeEnter', function(ev, d) {
+          if (d.historyId) {
+            $scope.$activeHistoryId = d.historyId;
+          }
+        });
+
+        $scope.$on('$destroy', function() {
+          $ionicBody.removeClass('menu-open', 'aside-open');
+        });
+
+      }
+    }
+  };
+}]);
+*/
