@@ -5,6 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('starter', ['ionic', 'ngCordova'])
 
+.controller('myCtrl', function($scope, $state) {
+  $scope.yolo = "yolo";
+
+  $scope.clickme = function(){
+    alert('yolo');
+  }
+
+})
+
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -27,30 +36,15 @@ angular.module('starter', ['ionic', 'ngCordova'])
   $stateProvider
   .state('map', {
     url: '/',
-    templateUrl: 'templates/map.html'
-    // controller: 'MapCtrl'
+    templateUrl: 'templates/map.html',
+    controller: 'MapCtrl'
   });
 
   $urlRouterProvider.otherwise("/");
 
 })
-.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
-  // A confirm dialog
- $scope.showConfirm = function() {
-   var confirmPopup = $ionicPopup.confirm({
-     title: 'Ajouter un point de récupération',
-     template: 'Si tu bullshit, je te casse les jambes'
-   });
-
-   confirmPopup.then(function(res) {
-     if(res) {
-       console.log('You are sure');
-     } else {
-       console.log('You are not sure');
-     }
-   });
- };
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
@@ -102,16 +96,31 @@ function getJSON(url) {
 
 getJSON('data/markers.json')
     .then(function(markers){
-        markers.forEach(function(marker){
+      var filtre = ['verre', 'boiteLettre', 'cabine'];
+      markers.forEach(function(marker){
+        if (filtre.indexOf(marker.categorie)!== -1){
+          var img = marker.img;
+          marker.locations.forEach(function(location){
+            new google.maps.Marker({
+              position: location.latlng,
+              map: $scope.map,
+              title: location.legende,
+              icon: img
+            });
+          });
+        }
+      });
+
+     /*   markers.forEach(function(marker){
           new google.maps.Marker({
             position: marker,
             map: $scope.map,
             title: 'Recup verre',
-            icon: 'img/recup_verre.png'
+            icon: ''
           });
-        })
+        })*/
       }, function(e){
-          console.log("Log story: " + e);
+          console.log("Log markers: " + e);
       });
 
   }, function(error){

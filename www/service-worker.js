@@ -1,7 +1,6 @@
 var CACHE_NAME = 'green-glass-cache-v1';
 var urlsToCache = [
   '/www/css/style.css',
-  '/www/js/app.js',
   '/www/img/recup_verre.png',
   '/www/index.html'
 ];

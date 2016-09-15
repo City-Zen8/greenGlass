@@ -2,6 +2,7 @@
 	{
 		"categorie":"verre",
 		"img":"img/recup_verre.png",
+		"legende":"Récup verre",
 		"locations" : [
 			{
 				"latlng":{"lat":47.223012,"lng":-1.636836},
@@ -15,8 +16,9 @@
 	},
 
 	{
-		"categorie":"BoiteLettre",
+		"categorie":"boiteLettre",
 		"img":"img/boite.png",
+		"legende":"boite au lettre",
 		"locations" : [
 			{
 				"latlng":{"lat":47.223735,"lng":-1.636272},
@@ -30,8 +32,9 @@
 	},
 
 	{
-		"categorie":"Cabine",
+		"categorie":"cabine",
 		"img":"img/cabine.png",
+		"legende":"Cabine téléphonique",
 		"locations" : [
 			{
 				"latlng":{"lat":47.223544,"lng":-1.636723},
