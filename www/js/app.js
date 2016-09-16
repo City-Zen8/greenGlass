@@ -56,7 +56,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
    $scope.openMenu = function() {
       $ionicSideMenuDelegate.toggleLeft();
     };
-    $scope.filter = [];
+   $scope.filter = ["verre"];
    $scope.toggleFilter = function(categ) {
 
       if ($scope.filter.indexOf(categ) !== -1){
@@ -102,7 +102,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
         $scope.markers[index].locations.push(location);
       }
     });
-    console.log($scope.markers);
   }
 
   // A confirm dialog
@@ -160,6 +159,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   }
 
   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  $scope.placeMarkers();
 
   }, function(error){
     console.log("Could not get location");
