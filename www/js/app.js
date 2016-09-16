@@ -36,7 +36,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
 })
 
-.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation, $ionicSideMenuDelegate) {
+.controller('MapCtrl', function($scope, $ionicModal, $timeout, $state, $cordovaGeolocation, $ionicSideMenuDelegate) {
   var config = {
     apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
     authDomain: "greenglassweb.firebaseapp.com",
@@ -72,7 +72,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     $scope.markersOnMap=[];
 
-    $scope.placeMarkers = function(){
+    var refreshMarker = $scope.placeMarkers = function(){
       $scope.markersOnMap.forEach(function(markerOnMap){
         markerOnMap.setMap(null);
       });
@@ -86,7 +86,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
                 map: $scope.map,
                 title: location.legende,
                 icon: img
-              })//.addListener('click', function() {infowindow.open($scope.map, this)})
+              })
             );
           });
         }
@@ -98,33 +98,53 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
   var options = {timeout: 10000, enableHighAccuracy: true};
   var addMarker = function (categorie, location) {
-    $scope.myMarkers.forEach(function(marker, index){
+    $scope.markers.forEach(function(marker, index){
       if(marker.categorie === categorie){
-        $scope.myMarkers[index].locations.push(location);
+        $scope.markers[index].locations.push(location);
       }
     });
+    rootRef.set($scope.markers);
+    refreshMarker();
   }
-  // A confirm dialog
-  $scope.showConfirm = function() {
-   var addGlass = $ionicPopup.confirm({
-     title: 'Ajouter un point de récupération',
-     template: 'Si tu bullshit, je te casse les jambes'
-   });
 
-   addGlass.then(function(res) {
-     if(res) {
-       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-         var location = {};
-         var newLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-         location.latlng = newLatLng.toJSON();
-         location.indice = 1;
-         addMarker('verre', location);
-      });
-     } else {
-       console.log('You are not sure');
-     }
-   });
+  // A confirm dialog
+
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.openModal = function() {
+    $scope.modal.show();
   };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
+   $scope.addMyMarker = function (categorie) {
+     $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+       var location = {};
+       var newLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+       location.latlng = newLatLng.toJSON();
+       location.indice = 1;
+       addMarker(categorie, location);
+    });
+   };
+
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 

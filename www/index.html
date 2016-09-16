@@ -93,8 +93,8 @@
       <ion-header-bar class="bar-stable">
         <button class="button button-positive button-icon button-clear ion-navicon" ng-click="openMenu()"></button>
         <h1 class="title">Green glass</h1>
-        <button class="button button-clear" ng-click="showConfirm()">
-          <i class = "icon icon ion-plus"></i>
+        <button class="button" ng-click="modal.show()">
+          <i class="icon ion-plus"></i>
         </button>
 
       </ion-header-bar>
@@ -106,4 +106,16 @@
         </button>
     </div>
   </body>
+  <script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Catégories</h1>
+    </ion-header-bar>
+    <ion-content>
+      <button class="button button-full button-balanced" ng-click="addMyMarker('verre'); modal.hide()">Récup Verre</button>
+      <button class="button button-full button-energized" ng-click="addMyMarker('boiteLettre'); modal.hide()">Boite aux lettres</button>
+      <button class="button button-full button-assertive" ng-click="addMyMarker('cabine'); modal.hide()">Cabine</button>
+    </ion-content>
+  </ion-modal-view>
+</script>
 </html>
