@@ -53,6 +53,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
   });
 
 
+
+
    $scope.openMenu = function() {
       $ionicSideMenuDelegate.toggleLeft();
     };
@@ -70,8 +72,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     $scope.markersOnMap=[];
 
-
-    $scope.placeMarkers = function(){
+    var refreshMarker = $scope.placeMarkers = function(){
       $scope.markersOnMap.forEach(function(markerOnMap){
         markerOnMap.setMap(null);
       });
@@ -102,6 +103,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
         $scope.markers[index].locations.push(location);
       }
     });
+    rootRef.set($scope.markers);
+    refreshMarker();
   }
 
   // A confirm dialog
@@ -144,6 +147,15 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    $scope.whereAmI = function () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            $scope.map.setCenter(initialLocation);
+        });
+      }
+    }
 
   var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
