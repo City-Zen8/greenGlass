@@ -140,7 +140,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
   }
 
   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  // $scope.map.setMyLocationEnabled(true);
 
   }, function(error){
     console.log("Could not get location");
