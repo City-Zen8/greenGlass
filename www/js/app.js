@@ -3,9 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// var firebase = require('firebase/app');
-// require('firebase/auth');
-// require('firebase/database');
+
 angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
@@ -37,8 +35,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
   $urlRouterProvider.otherwise("/");
 
 })
-.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation, $cordovaFile) {
 
+.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation, $ionicSideMenuDelegate) {
   var config = {
     apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
     authDomain: "greenglassweb.firebaseapp.com",
@@ -48,19 +46,59 @@ angular.module('starter', ['ionic', 'ngCordova'])
   };
   firebase.initializeApp(config);
   var rootRef = firebase.database().ref();
-  console.log(rootRef);
   rootRef.on("value", function(snapshot) {
-    console.log(snapshot.val());
+    $scope.markers = snapshot.val();
   }, function (errorObject) {
     console.log("The read failed: " + errorObject.code);
   });
+
+
+   $scope.openMenu = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
+    $scope.filter = [];
+   $scope.toggleFilter = function(categ) {
+
+      if ($scope.filter.indexOf(categ) !== -1){
+        $scope.filter.splice($scope.filter.indexOf(categ),1);
+      }
+      else{
+        $scope.filter.push(categ);
+      }
+      $scope.placeMarkers();
+    };
+
+    $scope.markersOnMap=[];
+
+    $scope.placeMarkers = function(){
+      $scope.markersOnMap.forEach(function(markerOnMap){
+        markerOnMap.setMap(null);
+      });
+      $scope.markers.forEach(function(marker){
+        if ($scope.filter.indexOf(marker.categorie)!== -1){
+          var img = marker.img;
+          marker.locations.forEach(function(location){
+            $scope.markersOnMap.push(
+              new google.maps.Marker({
+                position: location.latlng,
+                map: $scope.map,
+                title: location.legende,
+                icon: img
+              })
+            );
+          });
+        }
+        else{
+
+        }
+      });
+    };
 
   var options = {timeout: 10000, enableHighAccuracy: true};
   var addMarker = function (categorie, location) {
     $scope.myMarkers.forEach(function(marker, index){
       if(marker.categorie === categorie){
         $scope.myMarkers[index].locations.push(location);
-        console.log(marker);
       }
     });
   }
@@ -95,77 +133,54 @@ angular.module('starter', ['ionic', 'ngCordova'])
     zoom: 15,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
+  function ContentController($scope, $ionicSideMenuDelegate) {
+    $scope.toggleLeft = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
+  }
 
-  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);7
-
-
-  function get(url) {
-    // Return a new promise.
-    return new Promise(function(resolve, reject) {
-        // Do the usual XHR stuff
-        var req = new XMLHttpRequest();
-        req.open('GET', url);
-
-        req.onload = function() {
-            // This is called even on 404 etc
-            // so check the status
-            if (req.status == 200) {
-                // Resolve the promise with the response text
-                resolve(req.response);
-            }
-            else {
-                // Otherwise reject with the status text
-                // which will hopefully be a meaningful error
-                reject(Error(req.statusText));
-            }
-        };
-
-        // Handle network errors
-        req.onerror = function() {
-            reject(Error("Network Error"));
-        };
-
-        // Make the request
-        req.send();
-    });
-}
-
-function getJSON(url) {
-    return get(url).then(JSON.parse);
-}
-
-getJSON('data/markers.json')
-    .then(function(markers){
-      $scope.myMarkers = markers;
-      var filtre = ['verre', 'boiteLettre', 'cabine'];
-      markers.forEach(function(marker){
-        if (filtre.indexOf(marker.categorie)!== -1){
-          var img = marker.img;
-          marker.locations.forEach(function(location){
-            new google.maps.Marker({
-              position: location.latlng,
-              map: $scope.map,
-              title: location.legende,
-              icon: img
-            });
-          });
-        }
-      });
-
-     /*   markers.forEach(function(marker){
-          new google.maps.Marker({
-            position: marker,
-            map: $scope.map,
-            title: 'Recup verre',
-            icon: ''
-          });
-        })*/
-      }, function(e){
-          console.log("Log markers: " + e);
-      });
+  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+  // $scope.map.setMyLocationEnabled(true);
 
   }, function(error){
     console.log("Could not get location");
     alert("Could not get location");
   });
+
 });
+
+
+/*
+.directive('ionSideMenus', ['$ionicBody', function($ionicBody) {
+  return {
+    restrict: 'ECA',
+    controller: '$ionicSideMenus',
+    compile: function(element, attr) {
+      attr.$set('class', (attr['class'] || '') + ' view');
+
+      return { pre: prelink };
+      function prelink($scope, $element, $attrs, ctrl) {
+
+        ctrl.enableMenuWithBackViews($scope.$eval($attrs.enableMenuWithBackViews));
+
+        $scope.$on('$ionicExposeAside', function(evt, isAsideExposed) {
+          if (!$scope.$exposeAside) $scope.$exposeAside = {};
+          $scope.$exposeAside.active = isAsideExposed;
+          $ionicBody.enableClass(isAsideExposed, 'aside-open');
+        });
+
+        $scope.$on('$ionicView.beforeEnter', function(ev, d) {
+          if (d.historyId) {
+            $scope.$activeHistoryId = d.historyId;
+          }
+        });
+
+        $scope.$on('$destroy', function() {
+          $ionicBody.removeClass('menu-open', 'aside-open');
+        });
+
+      }
+    }
+  };
+}]);
+*/
