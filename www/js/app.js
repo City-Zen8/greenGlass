@@ -37,20 +37,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
 })
 
 .controller('MapCtrl', function($scope, $ionicModal, $timeout, $state, $cordovaGeolocation, $ionicSideMenuDelegate) {
-  var config = {
-    apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
-    authDomain: "greenglassweb.firebaseapp.com",
-    databaseURL: "https://greenglassweb.firebaseio.com",
-    storageBucket: "",
-    messagingSenderId: "428351029929"
-  };
-  firebase.initializeApp(config);
-  var rootRef = firebase.database().ref();
-  rootRef.on("value", function(snapshot) {
-    $scope.markers = snapshot.val();
-  }, function (errorObject) {
-    console.log("The read failed: " + errorObject.code);
-  });
+
 
 
 
@@ -170,8 +157,24 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
   }
 
-  $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  $scope.placeMarkers();
+  var config = {
+    apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
+    authDomain: "greenglassweb.firebaseapp.com",
+    databaseURL: "https://greenglassweb.firebaseio.com",
+    storageBucket: "",
+    messagingSenderId: "428351029929"
+  };
+  firebase.initializeApp(config);
+  var rootRef = firebase.database().ref();
+  rootRef.on("value", function(snapshot) {
+    $scope.markers = snapshot.val();
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    $scope.placeMarkers();
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+
+
 
   }, function(error){
     console.log("Could not get location");
