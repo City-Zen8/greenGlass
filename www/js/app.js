@@ -3,6 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
+// var firebase = require('firebase/app');
+// require('firebase/auth');
+// require('firebase/database');
 angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
@@ -34,24 +37,54 @@ angular.module('starter', ['ionic', 'ngCordova'])
   $urlRouterProvider.otherwise("/");
 
 })
-.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation) {
+.controller('MapCtrl', function($scope, $ionicPopup, $timeout, $state, $cordovaGeolocation, $cordovaFile) {
+
+  var config = {
+    apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
+    authDomain: "greenglassweb.firebaseapp.com",
+    databaseURL: "https://greenglassweb.firebaseio.com",
+    storageBucket: "",
+    messagingSenderId: "428351029929"
+  };
+  firebase.initializeApp(config);
+  var rootRef = firebase.database().ref();
+  console.log(rootRef);
+  rootRef.on("value", function(snapshot) {
+    console.log(snapshot.val());
+  }, function (errorObject) {
+    console.log("The read failed: " + errorObject.code);
+  });
+
   var options = {timeout: 10000, enableHighAccuracy: true};
+  var addMarker = function (categorie, location) {
+    $scope.myMarkers.forEach(function(marker, index){
+      if(marker.categorie === categorie){
+        $scope.myMarkers[index].locations.push(location);
+        console.log(marker);
+      }
+    });
+  }
   // A confirm dialog
   $scope.showConfirm = function() {
-   var confirmPopup = $ionicPopup.confirm({
+   var addGlass = $ionicPopup.confirm({
      title: 'Ajouter un point de récupération',
      template: 'Si tu bullshit, je te casse les jambes'
    });
 
-   confirmPopup.then(function(res) {
+   addGlass.then(function(res) {
      if(res) {
-       console.log('You are sure');
+       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+         var location = {};
+         var newLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+         location.latlng = newLatLng.toJSON();
+         location.indice = 1;
+         addMarker('verre', location);
+      });
      } else {
        console.log('You are not sure');
      }
    });
   };
-
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
@@ -103,6 +136,7 @@ function getJSON(url) {
 
 getJSON('data/markers.json')
     .then(function(markers){
+      $scope.myMarkers = markers;
       var filtre = ['verre', 'boiteLettre', 'cabine'];
       markers.forEach(function(marker){
         if (filtre.indexOf(marker.categorie)!== -1){
