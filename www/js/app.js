@@ -37,8 +37,15 @@ angular.module('starter', ['ionic', 'ngCordova'])
 })
 
 .controller('MapCtrl', function($scope, $ionicModal, $timeout, $state, $cordovaGeolocation, $ionicSideMenuDelegate) {
-
-
+  var config = {
+    apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
+    authDomain: "greenglassweb.firebaseapp.com",
+    databaseURL: "https://greenglassweb.firebaseio.com",
+    storageBucket: "",
+    messagingSenderId: "428351029929"
+  };
+  firebase.initializeApp(config);
+  var rootRef = firebase.database().ref();
 
 
 
@@ -157,15 +164,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
     };
   }
 
-  var config = {
-    apiKey: "AIzaSyCwoHVYS_N5ktPsd-yyMKvrU8YDCw-AtVU",
-    authDomain: "greenglassweb.firebaseapp.com",
-    databaseURL: "https://greenglassweb.firebaseio.com",
-    storageBucket: "",
-    messagingSenderId: "428351029929"
-  };
-  firebase.initializeApp(config);
-  var rootRef = firebase.database().ref();
   rootRef.on("value", function(snapshot) {
     $scope.markers = snapshot.val();
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
