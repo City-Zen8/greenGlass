@@ -53,6 +53,8 @@ angular.module('starter', ['ionic', 'ngCordova'])
   });
 
 
+
+
    $scope.openMenu = function() {
       $ionicSideMenuDelegate.toggleLeft();
     };
@@ -84,7 +86,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
                 map: $scope.map,
                 title: location.legende,
                 icon: img
-              })
+              })//.addListener('click', function() {infowindow.open($scope.map, this)})
             );
           });
         }
@@ -125,6 +127,15 @@ angular.module('starter', ['ionic', 'ngCordova'])
   };
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    $scope.whereAmI = function () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            $scope.map.setCenter(initialLocation);
+        });
+      }
+    }
 
   var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 

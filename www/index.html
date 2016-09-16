@@ -40,10 +40,6 @@
 
     <script src="lib/ngCordova/dist/ng-cordova.js"></script>
 
-    <script src="lib/geolocation-marker/src/geolocation-marker.js"></script>
-
-    <script src="lib/geolocation-marker/src/geolocation-marker-exports.js"></script>
-
     <script src="http://maps.google.com/maps/api/js?key=AIzaSyBbDaBafnU8TfP9upVzN7hMKHRNAZUklE0"></script>
   </head>
   <body ng-app="starter">
@@ -100,6 +96,7 @@
         <button class="button" ng-click="showConfirm()">
           <i class="icon ion-plus"></i>
         </button>
+        <button class="button button-icon button-clear ion-locate" ng-click="whereAmI()"></button>
       </ion-header-bar>
       <ion-content>
       </ion-content>
