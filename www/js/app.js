@@ -113,7 +113,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
   }
 
   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-  var GeoMarker = new GeolocationMarker($scope.map);
+  $scope.map.setMyLocationEnabled(true);
 
   function get(url) {
     // Return a new promise.
@@ -152,7 +152,8 @@ function getJSON(url) {
 
 getJSON('data/markers.json')
     .then(function(markers){
-      $scope.markers = markers;      
+      $scope.markers = markers;    
+      console.log($scope.markers);  
       $scope.placeMarkers();
 
      /*   markers.forEach(function(marker){
