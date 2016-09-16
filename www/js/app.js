@@ -70,15 +70,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
 
     $scope.markersOnMap=[];
 
-    var contentString = '<div id="content">'
-                      + '<button ng-click="valide()">-</button>'
-                      + '<button ng-click="unValide()">+</button>'
-                      + '</div>';
-
-    var infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
-
     $scope.placeMarkers = function(){
       $scope.markersOnMap.forEach(function(markerOnMap){
         markerOnMap.setMap(null);
@@ -93,7 +84,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
                 map: $scope.map,
                 title: location.legende,
                 icon: img
-              }).addListener('click', function() {infowindow.open($scope.map, this)})
+              })
             );
           });
         }
@@ -111,15 +102,6 @@ angular.module('starter', ['ionic', 'ngCordova'])
       }
     });
   }
-
-  $scope.valide = function() {
-    console.log = "PLOP"
-  };
-  $scope.unValide = function() {
-     console.log = "PLOP  PLOP" 
-  };
-
-
   // A confirm dialog
   $scope.showConfirm = function() {
    var addGlass = $ionicPopup.confirm({
