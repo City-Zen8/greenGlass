@@ -2,7 +2,10 @@ var CACHE_NAME = 'green-glass-cache-v1';
 var urlsToCache = [
   '/www/css/style.css',
   '/www/img/recup_verre.png',
-  '/www/index.html'
+  '/www/img/boite.png',
+  '/www/img/cabine.png',
+  '/www/index.html',
+  '/www/js/app.js'
 ];
 
 self.addEventListener('install', function(event) {
