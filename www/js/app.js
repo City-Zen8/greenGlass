@@ -93,7 +93,7 @@ angular.module('starter', ['ionic', 'ngCordova'])
                 map: $scope.map,
                 title: location.legende,
                 icon: img
-              }).addListener('click', function() {infowindow.open($scope.map, this)})
+              })//.addListener('click', function() {infowindow.open($scope.map, this)})
             );
           });
         }
