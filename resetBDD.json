@@ -5,11 +5,11 @@
 		"legende":"Récup verre",
 		"locations" : [
 			{
-				"latlng":{"lat":47.223012,"lng":-1.636836},
+				"latlng":{"lat":47.221277,"lng": -1.630736},
 				"indice":1
 			},
 			{
-				"latlng":{"lat":47.225526,"lng":-1.635344},
+				"latlng":{"lat":47.225093,"lng": -1.638438},
 				"indice":1
 			}
 		]
@@ -21,7 +21,7 @@
 		"legende":"boite au lettre",
 		"locations" : [
 			{
-				"latlng":{"lat":47.223735,"lng":-1.636272},
+				"latlng":{"lat":47.223718,"lng": -1.629652},
 				"indice":1
 			},
 			{
@@ -37,7 +37,7 @@
 		"legende":"Cabine téléphonique",
 		"locations" : [
 			{
-				"latlng":{"lat":47.223544,"lng":-1.636723},
+				"latlng":{"lat":47.220949,"lng": -1.622947},
 				"indice":1
 			},
 			{
